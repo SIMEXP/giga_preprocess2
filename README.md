@@ -51,6 +51,21 @@ Here we describe the common shared steps for datasets in BIDS format.
     
 4. Archive the dataset. [See this page](https://simexp-documentation.readthedocs.io/en/latest/alliance_canada/tape.html)
 
+    Run the process on a computing node in a tmux session.
+    ```
+    tmux
+    salloc --account=rrg-pbellec --mem-per-cpu=8G --time=8:00:0 --cpus-per-task=1
+    ```
+    After starting the session, archive the data:
+    ```
+    cd /path/to/fmriprep/derivative
+    FILENAME=${PWD##*/} 
+    tar -vcf /nearline/ctb-pbellec/giga_preprocessing_2/${FILENAME}.tar.gz .
+    ```
+    We do not apply the compression (`-z`) flag to save computing time. 
+    
+    Exit from the tmux session with key combo `ctrl-b-d`
+    
 ## Timeseries extraction 
 
 TBA
