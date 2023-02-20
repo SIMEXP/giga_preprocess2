@@ -9,7 +9,6 @@
 
 
 FMRIPREP_PATH="/lustre04/scratch/hwang1/ds000030_fmriprep-20.2.1lts"
-SITES=(`ls $FMRIPREP_PATH`)
 DATASET_NAME=`basename $FMRIPREP_PATH`
 
 ARCHIVE_PATH="/lustre03/nearline/6035398/giga_preprocessing_2/${DATASET_NAME}"
