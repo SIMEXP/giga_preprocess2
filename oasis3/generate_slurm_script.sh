@@ -1,5 +1,11 @@
 #!/bin/bash
 #SBATCH --account=rrg-pbellec
+#SBATCH --job-name=oasis3fmriprepslurm
+#SBATCH --output=/path/to/your/scratch/logs/%x_%A.out
+#SBATCH --error=/path/to/your/scratch/logs/%x_%A.err
+#SBATCH --time=6:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
 CONTAINER_PATH="/lustre03/project/6003287/containers"
 VERSION="20.2.1"
 EMAIL=${SLACK_EMAIL_BOT}
