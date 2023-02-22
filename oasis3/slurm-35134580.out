@@ -1,0 +1,4 @@
+Create fmriprep-slurm scripts for OASIS3
+bids-validator@1.4.0
+
+slurmstepd: error: *** JOB 35134580 ON bc11233 CANCELLED AT 2023-02-22T18:36:29 DUE TO TIME LIMIT ***
