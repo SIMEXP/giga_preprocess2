@@ -70,6 +70,17 @@ Alternatively, see the script for abide to archive by site on the SLRUM schedule
 
 [WIP](https://github.com/SIMEXP/giga_connectome)
 
+To work within the limitation of the file storage policy, we will work in the user's home scratch. The procedure is as followed:
+
+- Copy the fMRIPrep output from nearline to scratch, untar
+- Run the connectome tool and store the output on SLRUM scratch
+- If successful, copy the connectome to user's home scratch
+
+We want to preprocess using all preset strategies.
+
+Create an archive to nearline once that's done.
+
+
 ### Quality control
 
 TBA
