@@ -17,20 +17,43 @@ def check_timeout(args):
     )
     failed_subjects = submitted_subjects - completed_subjects
 
+    if not failed_subjects:
+        print("Data set preprocessed with no errors.")
+        return
+
     timeout_subjects = set()
+    workflow_error_subjects = set()
     for s in failed_subjects:
+
         with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
             txt=f.read()
             if re.search(r'\bDUE TO TIME LIMIT\b', txt):
                 timeout_subjects.add(s)
-                slurm_filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
-                inplace_change(slurm_filename, "--time=36:00:00", "--time=48:00:00")
-                print(f"Resubmit this file: sbatch {str(slurm_filename)}")
+
+        with open(fmriprep_slurm_output / f"smriprep_{s}.out") as f:
+            txt=f.read()
+            if re.search(r'\bnipype.workflow ERROR\b', txt):
+                workflow_error_subjects.add(s)
+
+    timeout_subjects -= workflow_error_subjects
     failed_subjects -= timeout_subjects
-    print("The following subjects faced some error during preprocessing: "
-          f"{failed_subjects}")
-    print(f"The following subjects were timed out: {timeout_subjects}"
-          "Increased wall time and try to resubmit again.")
+    failed_subjects -= workflow_error_subjects
+
+    if failed_subjects:
+        print("The following subjects faced some error during preprocessing: "
+            f"{failed_subjects}")
+    if workflow_error_subjects:
+        print("The following subjects were timed out and error did not get"
+            f" propergated: {workflow_error_subjects}")
+
+    if timeout_subjects:
+        print(f"The following subjects were timed out: {timeout_subjects}"
+            "Increased wall time and try to resubmit again.")
+
+        for s in timeout_subjects:
+            slurm_filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
+            inplace_change(slurm_filename, "--time=36:00:00", "--time=48:00:00")
+            print(f"Resubmit this file: sbatch {str(slurm_filename)}")
 
 
 def inplace_change(filename, old_string, new_string):
