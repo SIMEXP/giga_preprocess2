@@ -8,8 +8,9 @@
 
 source /lustre03/project/6003287/${USER}/.virtualenvs/giga_connectome/bin/activate
 
-ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide2_fmriprep-20.2.1lts_1667762103
-ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide2_connectomes
+ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.1lts_1677784848
+ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide1_connectomes
+
 WORKINGDIR=${ABIDE2_CONNECTOME}/working_directory
 
 STRATEGIES=("simple" "simple+gsr" "scrubbing.5" "scrubbing.5+gsr" "scrubbing.2" "scrubbing.2+gsr" "acompcor50" "icaaroma")
