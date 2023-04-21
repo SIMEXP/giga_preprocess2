@@ -26,7 +26,7 @@ echo $PYTHON_CMD | xargs singularity exec -B $PROJECT_PATH/fmriprep-slurm:/fmrip
   -B /etc/pki:/etc/pki \
   -B $TEMPLATEFLOW_DIR:/templateflow \
   -B $OUTPUT_DIR:/OUTPUT \
-  $PROJECT_PATH/containers/fmriprep-20.2.1lts.sif
+  $PROJECT_PATH/containers/fmriprep-20.2.7lts.sif
 
 echo ""
 echo "Finished!"
