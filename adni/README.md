@@ -1,10 +1,30 @@
-1. create_dataset_description.py
-    -  fixes BIDS validation error [code 57] DATASET_DESCRIPTION_JSON_MISSING.
-    -  BIDS version used is unknown, so specified latest version (discussion here: https://neurostars.org/t/what-bids-version-to-use-for-legacy-dataset/25619)
+# adni-fmriprep-slurm
+Scripts for preprocessing ADNI data with fMRIPrep2.2.7lts. 
+## Dependency
+- [fmriprep-slurm](https://simexp-documentation.readthedocs.io/en/latest/giga_preprocessing/preprocessing.html)
+- Python
+## Retrieving data
+Data not openly available. Used BIDS-ified dataset on Elm.
+## BIDS errors
+Ran the following scripts:
+1. `create_dataset_description.py`
+    -  creates dataset_description.json at the root directory with minimal information
+    -  BIDS version used is unknown, so specified latest version [discussion]( https://neurostars.org/t/what-bids-version-to-use-for-legacy-dataset/25619).
+    -  fixes BIDS validation error `code: 57 DATASET_DESCRIPTION_JSON_MISSING`
 
-2. create_task-rest_bold.py
-    - fixes BIDS validation error [code 50] TASK_NAME_MUST_DEFINE
+2. `create_task-rest_bold.py`
+    - creates task-rest_bold.json at the root directory, detailing bold task
+    - fixes BIDS validation error `code: 50 TASK_NAME_MUST_DEFINE`
 
-3. correct_slice_timing.py
-    - fixes BIDS validation error [code 66] SLICETIMING_VALUES_GREATOR_THAN_REPETITION_TIME
+3. `create_bidsignore.sh`
+    - creates .bidsignore at the root and adds *T1w_cropped.nii to ignore these files, which are not needed
+    - fixes BIDS validation error `code: 1 - NOT_INCLUDED`
+    - TODO: check this also fixes error `code: 63 - SESSION_VALUE_CONTAINS_ILLEGAL_CHARACTER`, it should do
 
+3. `correct_slice_timing.py`
+    - halves the slice timing for sub-109S4594 (ses-20160502), which appears to be doubled ([discussion](https://neurostars.org/t/help-with-bids-errors-66-and-75-in-legacy-dataset/25625)
+    - fixes BIDS validation error `code: 66 SLICETIMING_VALUES_GREATOR_THAN_REPETITION_TIME`
+
+TODO:
+- fix error `code: 75 - NIFTI_PIXDIM4`, but only affects two subjects so I am trying to run rest in the meantime.
+- de-bug slurm scripts and run
