@@ -16,9 +16,10 @@ mkdir -p $OUTPUT_PATH
 # run BIDS validator on the dataset
 # you only need this done once
 singularity exec -B ${DATASET_PATH}:/DATA \
-    ${CONTAINER_PATH}/fmriprep-${VERSION}lts.sif bids-validator /DATA
+    ${CONTAINER_PATH}/fmriprep-${VERSION}lts.sif bids-validator /DATA \
+    > ${OUTPUT_PATH}/bids_validator.log
 
-# running the script from the curre directory, reference
+# running the script from the current directory, reference
 # fmriprep_slurm_singularity_run.bash from one level up
 bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${OUTPUT_PATH} \
