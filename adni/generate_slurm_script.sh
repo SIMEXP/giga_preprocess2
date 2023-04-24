@@ -20,7 +20,7 @@ singularity exec -B ${DATASET_PATH}:/DATA \
 
 # running the script from the curre directory, reference
 # fmriprep_slurm_singularity_run.bash from one level up
-bash ../scripts/fmriprep_slurm_singularity_run.bash \  
+bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${OUTPUT_PATH} \
     ${DATASET_PATH} \
     fmriprep-${VERSION}lts \
