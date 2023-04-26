@@ -1,6 +1,6 @@
 #!/bin/bash
 CONTAINER_PATH="/lustre03/project/6003287/containers"
-VERSION="20.2.1"
+VERSION="20.2.7"
 EMAIL=${SLACK_EMAIL_BOT}
 
 module load singularity/3.8
@@ -16,7 +16,7 @@ mkdir -p $OUTPUT_PATH
 # run BIDS validator on the dataset
 # you only need this done once
 singularity exec -B ${DATASET_PATH}:/DATA \
-    ${CONTAINER_PATH}/fmriprep-20.2.1lts.sif bids-validator /DATA
+    ${CONTAINER_PATH}/fmriprep-${VERSION}lts.sif bids-validator /DATA
 
 # running the script from the curre directory, reference
 # fmriprep_slurm_singularity_run.bash from one level up

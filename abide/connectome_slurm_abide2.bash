@@ -31,7 +31,8 @@ if [ -d "${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.1lts" ]; then
 		${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.1lts \
 		${SLURM_TMPDIR}/${SITE} \
 		group
-	rsync -rltv --info=progress2 $SLURM_TMPDIR/${SITE} ${ABIDE2_CONNECTOME}/
+	exitcode=$?  # catch exit code
+	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 $SLURM_TMPDIR/${SITE} ${ABIDE2_CONNECTOME}/ ; fi
 else
     echo "no preprocessed data for ${SITE}"
 fi

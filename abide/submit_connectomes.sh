@@ -27,17 +27,6 @@ done
 FMRIPREP_PATH="/lustre04/scratch/hwang1/abide1_fmriprep-20.2.1lts_1677784848"
 SITES=`ls $FMRIPREP_PATH`
 
-# generate bids dataset first
-# for site in ${SITES}; do
-#     sbatch \
-#         --array=1 \
-#         --time=6:00:00 --mem-per-cpu=8G \
-#         --job-name=abide1_connectome_${site}_MIST \
-#         --export=ATLAS="MIST",SITE=$site \
-#             ./connectome_slurm_abide1.bash
-# done
-
-# run the rest
 for site in ${SITES}; do
     sbatch \
         --time=6:00:00 --mem-per-cpu=8G \
