@@ -8,12 +8,12 @@ Data not openly available. Used BIDS-ified dataset on Elm.
 ## BIDS errors
 Ran the following scripts to fix errors:
 1. `create_dataset_description.py`
-    -  creates dataset_description.json at the root directory with minimal information
+    -  creates `dataset_description.json` at the root directory with minimal information
     -  BIDS version used is unknown, so specified latest version (see [discussion]( https://neurostars.org/t/what-bids-version-to-use-for-legacy-dataset/25619)).
     -  fixes BIDS validation error `code: 57 DATASET_DESCRIPTION_JSON_MISSING`
 
 2. `create_task-rest_bold.py`
-    - creates task-rest_bold.json at the root directory, detailing bold task
+    - creates `task-rest_bold.json` at the root directory, detailing bold task
     - fixes BIDS validation error `code: 50 TASK_NAME_MUST_DEFINE`
 
 3. `create_bidsignore.sh`
