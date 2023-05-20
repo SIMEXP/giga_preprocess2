@@ -24,17 +24,23 @@ def check_timeout(args):
     workflow_error_subjects = set()
     oom_subjects = set()
     for s in failed_subjects:
+        try:
+            with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
+                txt=f.read()
+                if re.search(r'\bDUE TO TIME LIMIT\b', txt):
+                    timeout_subjects.add(s)
+                if re.search(r'\bout-of-memory\b', txt):
+                    oom_subjects.add(s)
+        except FileNotFoundError:
+            pass
 
-        with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
-            txt=f.read()
-            if re.search(r'\bDUE TO TIME LIMIT\b', txt):
-                timeout_subjects.add(s)
-            if re.search(r'\bout-of-memory\b', txt):
-                oom_subjects.add(s)
-        with open(fmriprep_slurm_output / f"smriprep_{s}.out") as f:
-            txt=f.read()
-            if re.search(r'\bnipype.workflow ERROR\b', txt):
-                workflow_error_subjects.add(s)
+        try:
+            with open(fmriprep_slurm_output / f"smriprep_{s}.out") as f:
+                txt=f.read()
+                if re.search(r'\bnipype.workflow ERROR\b', txt):
+                    workflow_error_subjects.add(s)
+        except FileNotFoundError:
+            pass
 
     oom_subjects -= workflow_error_subjects
     timeout_subjects -= workflow_error_subjects
