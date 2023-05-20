@@ -49,11 +49,9 @@ def check_timeout(args):
     failed_subjects -= workflow_error_subjects
 
     if failed_subjects:
-        print("The following subjects faced some error during preprocessing: "
-            f"{failed_subjects}")
+        print(f"{len(failed_subjects)} subjects faced some error during preprocessing: {failed_subjects}")
     if workflow_error_subjects:
-        print("The following subjects were timed out and error did not get"
-            f" propagated: {workflow_error_subjects}")
+        print(f"{len(workflow_error_subjects)} subjects were timed out and error did not get propagated: {workflow_error_subjects}")
 
     if timeout_subjects or oom_subjects:
         # Make a new directory for modified slurm scripts
@@ -61,8 +59,8 @@ def check_timeout(args):
         modified_slurm_dir.mkdir(exist_ok=True)
 
         if timeout_subjects:
-            print(f"The following subjects were timed out: {timeout_subjects}"
-                "Increased wall time and try to resubmit again.")
+            print(f"{len(timeout_subjects)} subjects were timed out: {timeout_subjects}"
+                  "Increased wall time and try to resubmit again.")
 
             # Update the wall time for subjects that timed out, creating a new .slurm script
             for s in timeout_subjects:
@@ -72,7 +70,7 @@ def check_timeout(args):
                 create_modified_slurm(filename, modified_filename, replacements)
 
         if oom_subjects:
-            print(f"The following subjects were killed by the out-of-memory handler: {oom_subjects}"
+            print(f"{len(oom_subjects)} subjects were killed by the out-of-memory handler: {oom_subjects}"
                 "Increased memory and wall time and try to resubmit again.")
 
             # Update the wall time and add a memory upper limit for subjects that had an out-of-memory error, creating a new .slurm script
@@ -83,8 +81,7 @@ def check_timeout(args):
                 create_modified_slurm(filename, modified_filename, replacements)
 
         print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
-          find "{modified_slurm_dir}/.slurm/smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
-
+          find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
 
 def create_modified_slurm(filename, modified_filename, replacements):
     # read the input filename using 'with'
