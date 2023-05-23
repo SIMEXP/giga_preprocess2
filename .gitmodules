@@ -1,3 +1,0 @@
-[submodule "abide"]
-	path = abide
-	url = git@github.com:htwangtw/abide-fmriprep-slurm.git

@@ -2,10 +2,10 @@
 
 Preprocess datasets using fMRIPrep.
 
-To clone this repository, including the submodules:
+To clone this repository:
 
 ```
-git clone --recurse-submodules git@github.com:SIMEXP/giga_preprocess2.git
+git clone  git@github.com:SIMEXP/giga_preprocess2.git
 ```
 
 ## Project structure
