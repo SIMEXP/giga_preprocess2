@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --account=rrg-pbellec
+#SBATCH --account=def-pbellec
 #SBATCH --job-name=fmriprep_archive
 #SBATCH --output=/home/nclarke/scratch/logs/adni_fmriprep_archive.out
 #SBATCH --error=/home/nclarke/scratch//logs/adni_fmriprep_archive.out
-#SBATCH --time=48:00:00
+#SBATCH --time=42:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 
