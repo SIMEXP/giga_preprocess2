@@ -10,7 +10,6 @@ DATASET_PATH="/lustre04/scratch/${USER}/openneuro/ds000030"
 echo $DATASET_PATH
 time=`date +%s`
 OUTPUT_PATH="/lustre04/scratch/nclarke/ds000030_fmriprep-${VERSION}lts_${time}"
-SITES=`ls $DATASET_PATH`
 
 mkdir -p $OUTPUT_PATH
 
@@ -26,7 +25,6 @@ bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${OUTPUT_PATH} \
     ${DATASET_PATH} \
     fmriprep-${VERSION}lts \
-    --fmriprep-args= \
     --email=${EMAIL} \
     --time=12:00:00 \
     --mem-per-cpu=12288 \
