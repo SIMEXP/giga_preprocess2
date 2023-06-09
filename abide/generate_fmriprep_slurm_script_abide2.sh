@@ -26,6 +26,5 @@ for site in ${SITES}; do
         --time=26:00:00 \
         --mem-per-cpu=6144 \
         --cpus=1 \
-        --container fmriprep-${VERSION}lts \
-        --output-spaces MNI152NLin2009cAsym:res-02
+        --container fmriprep-${VERSION}lts
 done

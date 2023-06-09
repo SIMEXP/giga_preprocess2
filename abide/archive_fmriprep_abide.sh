@@ -10,7 +10,7 @@
 
 
 FMRIPREP_PATH="/lustre04/scratch/hwang1/abide1_fmriprep-20.2.7lts"
-SITES=("CMU_a" "CMU_b" "KKI" "Leuven_1" "Leuven_2" "MaxMun_a" "MaxMun_b" "NYU" "OHSU" "Olin" "Pitt" "SBL" "Stanford" "Trinity" "UCLA_1" "UCLA_2" "USM" "Yale" "UM_1" "UM_2" "SDSU" "MaxMun_c" "MaxMun_d" "Caltech")
+SITES=(`ls $FMRIPREP_PATH`)
 DATASET_NAME=`basename $FMRIPREP_PATH`
 
 ARCHIVE_PATH="/lustre03/nearline/6035398/giga_preprocessing_2/${DATASET_NAME}"
