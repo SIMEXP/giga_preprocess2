@@ -26,7 +26,7 @@ bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${DATASET_PATH} \
     fmriprep-${VERSION}lts \
     --email=${EMAIL} \
-    --time=12:00:00 \
+    --time=36:00:00 \
     --mem-per-cpu=12288 \
     --cpus=1 \
     --container fmriprep-${VERSION}lts
