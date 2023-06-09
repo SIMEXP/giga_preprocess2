@@ -22,7 +22,6 @@ for site in ${SITES}; do
         ${OUTPUT_PATH} \
         ${DATASET_PATH}/${site} \
         fmriprep-${VERSION}lts \
-        --fmriprep-args=\"--use-aroma\" \
         --email=${EMAIL} \
         --time=36:00:00 \
         --mem-per-cpu=12288 \
