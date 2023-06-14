@@ -21,83 +21,68 @@ def check_timeout(args):
         print("Data set preprocessed with no errors.")
         return
 
-    timeout_subjects = set()
-    workflow_error_subjects = set()
-    out_of_memory_subjects = set()
-    tmp_space_subjects = set()
+    error_subjects = {
+        "timeout": set(),
+        "out_of_memory": set(),
+        "tmp_space": set(),
+        "workflow": set()
+    }
+
     for s in failed_subjects:
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
-                txt=f.read()
+                txt = f.read()
                 if re.search(r'\bDUE TO TIME LIMIT\b', txt):
-                    timeout_subjects.add(s)
+                    error_subjects["timeout"].add(s)
                 if re.search(r'\bout-of-memory\b', txt):
-                    out_of_memory_subjects.add(s)
+                    error_subjects["out_of_memory"].add(s)
                 if re.search(r'\bNo space left on device\b', txt):
-                    tmp_space_subjects.add(s)
+                    error_subjects["tmp_space"].add(s)
         except FileNotFoundError:
             warnings.warn(f"smriprep_{s}.err not found.")
 
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.out") as f:
-                txt=f.read()
+                txt = f.read()
                 if re.search(r'\bnipype.workflow ERROR\b', txt):
-                    workflow_error_subjects.add(s)
+                    error_subjects["workflow"].add(s)
         except FileNotFoundError:
             warnings.warn(f"smriprep_{s}.out not found.")
 
-    out_of_memory_subjects -= workflow_error_subjects
-    timeout_subjects -= workflow_error_subjects
-    # tmp_space_subjects -= workflow_error_subjects
-    timeout_subjects -= out_of_memory_subjects
-    failed_subjects -= timeout_subjects
-    failed_subjects -= workflow_error_subjects
+    error_subjects["out_of_memory"] -= error_subjects["workflow"]
+    error_subjects["timeout"] -= error_subjects["workflow"]
+    error_subjects["timeout"] -= error_subjects["out_of_memory"]
+    failed_subjects -= error_subjects["timeout"]
+    failed_subjects -= error_subjects["workflow"]
 
     if failed_subjects:
         print(f"{len(failed_subjects)} subjects faced some error during preprocessing: {failed_subjects}")
-    if workflow_error_subjects:
-        print(f"{len(workflow_error_subjects)} subjects were timed out and error did not get propagated: {workflow_error_subjects}")
+    if error_subjects["workflow"]:
+        print(f"{len(error_subjects['workflow'])} subjects were timed out and error did not get propagated: {error_subjects['workflow']}")
 
-    if timeout_subjects or out_of_memory_subjects or tmp_space_subjects:
-        # Make a new directory for modified slurm scripts
+    if error_subjects:
         modified_slurm_dir = fmriprep_slurm_output / ".slurm_modified"
         modified_slurm_dir.mkdir(exist_ok=True)
 
-        if timeout_subjects:
-            print(f"{len(timeout_subjects)} subjects were timed out: {timeout_subjects}"
-                  "Increased wall time and try to resubmit again.")
+        for error_type, subjects in error_subjects.items():
+            if subjects:
+                if error_type == "timeout":
+                    print(f"{len(subjects)} subjects were timed out: {subjects}\nIncreased wall time and try to resubmit again.")
+                    replacements = [("--time=36:00:00", "--time=48:00:00")]
+                elif error_type == "out_of_memory":
+                    print(f"{len(subjects)} subjects were killed by the out-of-memory handler: {subjects}\nIncreased memory and wall time and try to resubmit again.")
+                    replacements = [("--time=36:00:00", "--time=48:00:00"), ("--random-seed 0", "--random-seed 0 --mem-mb 11000")]
+                elif error_type == "tmp_space":
+                    print(f"{len(subjects)} subjects ran out of space in local scratch: {subjects}\nAdded request for space and try to resubmit again.")
+                    replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=10GB")]
 
-            # Update the wall time for subjects that timed out, creating a new .slurm script
-            for s in timeout_subjects:
-                filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
-                modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
-                replacements = [("--time=36:00:00", "--time=48:00:00")]
-                create_modified_slurm(filename, modified_filename, replacements)
+                for s in subjects:
+                    filename = (fmriprep_slurm_output / ".slurm" / f"smriprep_{s}.sh").resolve()
+                    modified_filename = modified_slurm_dir.with_name(f"modified_smriprep_{s}.sh")
+                    create_modified_slurm(filename, modified_filename, replacements)
 
-        if out_of_memory_subjects:
-            print(f"{len(out_of_memory_subjects)} subjects were killed by the out-of-memory handler: {out_of_memory_subjects}"
-                "Increased memory and wall time and try to resubmit again.")
-
-            # Update the wall time and add a memory upper limit for subjects that had an out-of-memory error, creating a new .slurm script
-            for s in out_of_memory_subjects:
-                filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
-                modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
-                replacements = [("--time=36:00:00", "--time=48:00:00"), ("--random-seed 0", "--random-seed 0 --mem-mb 11000")]
-                create_modified_slurm(filename, modified_filename, replacements)
-
-        if tmp_space_subjects:
-            print(f"{len(tmp_space_subjects)} subjects ran out out of space in local scratch: {tmp_space_subjects}"
-                "Added request for space and try to resubmit again.")
-
-            # Add request for local scratch space to slurm script for these subjects, creating a new .slurm script
-            for s in tmp_space_subjects:
-                filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
-                modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
-                replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=10GB")]
-                create_modified_slurm(filename, modified_filename, replacements)
-
-        print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
-          find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
+            print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
+            find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
 
 def create_modified_slurm(filename, modified_filename, replacements):
     # read the input filename using 'with'
@@ -116,7 +101,7 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
         description=(
-            "Check if the job failed on timeout. Modify fMRIPrep SLRUM script "
+            "Check if the job failed. Create modified fMRIPrep SLRUM script "
             "accordingly."
         ),
     )
@@ -132,10 +117,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
 
 
