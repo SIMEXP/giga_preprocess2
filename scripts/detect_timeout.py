@@ -24,6 +24,7 @@ def check_timeout(args):
     timeout_subjects = set()
     workflow_error_subjects = set()
     out_of_memory_subjects = set()
+    tmp_space_subjects = set()
     for s in failed_subjects:
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
@@ -32,6 +33,8 @@ def check_timeout(args):
                     timeout_subjects.add(s)
                 if re.search(r'\bout-of-memory\b', txt):
                     out_of_memory_subjects.add(s)
+                if re.search(r'\bNo space left on device\b', txt):
+                    tmp_space_subjects.add(s)
         except FileNotFoundError:
             warnings.warn(f"smriprep_{s}.err not found.")
 
@@ -45,6 +48,7 @@ def check_timeout(args):
 
     out_of_memory_subjects -= workflow_error_subjects
     timeout_subjects -= workflow_error_subjects
+    # tmp_space_subjects -= workflow_error_subjects
     timeout_subjects -= out_of_memory_subjects
     failed_subjects -= timeout_subjects
     failed_subjects -= workflow_error_subjects
@@ -54,7 +58,7 @@ def check_timeout(args):
     if workflow_error_subjects:
         print(f"{len(workflow_error_subjects)} subjects were timed out and error did not get propagated: {workflow_error_subjects}")
 
-    if timeout_subjects or out_of_memory_subjects:
+    if timeout_subjects or out_of_memory_subjects or tmp_space_subjects:
         # Make a new directory for modified slurm scripts
         modified_slurm_dir = fmriprep_slurm_output / ".slurm_modified"
         modified_slurm_dir.mkdir(exist_ok=True)
@@ -79,6 +83,17 @@ def check_timeout(args):
                 filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
                 modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
                 replacements = [("--time=36:00:00", "--time=48:00:00"), ("--random-seed 0", "--random-seed 0 --mem-mb 11000")]
+                create_modified_slurm(filename, modified_filename, replacements)
+
+        if tmp_space_subjects:
+            print(f"{len(tmp_space_subjects)} subjects ran out out of space in local scratch: {tmp_space_subjects}"
+                "Added request for space and try to resubmit again.")
+
+            # Add request for local scratch space to slurm script for these subjects, creating a new .slurm script
+            for s in tmp_space_subjects:
+                filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
+                modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
+                replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=10GB")]
                 create_modified_slurm(filename, modified_filename, replacements)
 
         print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
