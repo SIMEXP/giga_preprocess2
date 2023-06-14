@@ -1,3 +1,4 @@
+import warnings
 import argparse
 import re
 from pathlib import Path
@@ -22,7 +23,7 @@ def check_timeout(args):
 
     timeout_subjects = set()
     workflow_error_subjects = set()
-    oom_subjects = set()
+    out_of_memory_subjects = set()
     for s in failed_subjects:
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
@@ -30,7 +31,7 @@ def check_timeout(args):
                 if re.search(r'\bDUE TO TIME LIMIT\b', txt):
                     timeout_subjects.add(s)
                 if re.search(r'\bout-of-memory\b', txt):
-                    oom_subjects.add(s)
+                    out_of_memory_subjects.add(s)
         except FileNotFoundError:
             pass
 
@@ -42,9 +43,9 @@ def check_timeout(args):
         except FileNotFoundError:
             pass
 
-    oom_subjects -= workflow_error_subjects
+    out_of_memory_subjects -= workflow_error_subjects
     timeout_subjects -= workflow_error_subjects
-    timeout_subjects -= oom_subjects
+    timeout_subjects -= out_of_memory_subjects
     failed_subjects -= timeout_subjects
     failed_subjects -= workflow_error_subjects
 
@@ -53,7 +54,7 @@ def check_timeout(args):
     if workflow_error_subjects:
         print(f"{len(workflow_error_subjects)} subjects were timed out and error did not get propagated: {workflow_error_subjects}")
 
-    if timeout_subjects or oom_subjects:
+    if timeout_subjects or out_of_memory_subjects:
         # Make a new directory for modified slurm scripts
         modified_slurm_dir = fmriprep_slurm_output / ".slurm_modified"
         modified_slurm_dir.mkdir(exist_ok=True)
@@ -69,12 +70,12 @@ def check_timeout(args):
                 replacements = [("--time=36:00:00", "--time=48:00:00")]
                 create_modified_slurm(filename, modified_filename, replacements)
 
-        if oom_subjects:
-            print(f"{len(oom_subjects)} subjects were killed by the out-of-memory handler: {oom_subjects}"
+        if out_of_memory_subjects:
+            print(f"{len(out_of_memory_subjects)} subjects were killed by the out-of-memory handler: {out_of_memory_subjects}"
                 "Increased memory and wall time and try to resubmit again.")
 
             # Update the wall time and add a memory upper limit for subjects that had an out-of-memory error, creating a new .slurm script
-            for s in oom_subjects:
+            for s in out_of_memory_subjects:
                 filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
                 modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
                 replacements = [("--time=36:00:00", "--time=48:00:00"), ("--random-seed 0", "--random-seed 0 --mem-mb 11000")]
