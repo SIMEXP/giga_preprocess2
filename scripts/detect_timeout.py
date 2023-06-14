@@ -33,7 +33,7 @@ def check_timeout(args):
                 if re.search(r'\bout-of-memory\b', txt):
                     out_of_memory_subjects.add(s)
         except FileNotFoundError:
-            pass
+            warnings.warn(f"smriprep_{s}.err not found.")
 
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.out") as f:
@@ -41,7 +41,7 @@ def check_timeout(args):
                 if re.search(r'\bnipype.workflow ERROR\b', txt):
                     workflow_error_subjects.add(s)
         except FileNotFoundError:
-            pass
+            warnings.warn(f"smriprep_{s}.out not found.")
 
     out_of_memory_subjects -= workflow_error_subjects
     timeout_subjects -= workflow_error_subjects
