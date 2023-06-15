@@ -11,8 +11,8 @@
 source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
 FMRIPREP_PATH=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.7lts
-QC_OUTPUT=/lustre04/scratch/${USER}/abide1_qc
-SITES=("Caltech" "CMU_a" "CMU_b" "KKI" "Leuven_1" "Leuven_2" "MaxMun_a" "MaxMun_b" "MaxMun_c" "MaxMun_d" "NYU" "OHSU" "Olin" "Pitt" "SBL" "SDSU" "Stanford" "Trinity" "UCLA_1" "UCLA_2" "UM_1" "UM_2" "USM" "Yale")
+QC_OUTPUT=/lustre04/scratch/${USER}/abide1_giga-auto-qc-0.3.1
+SITES=(`ls $FMRIPREP_PATH`)
 
 SITE=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}
 
