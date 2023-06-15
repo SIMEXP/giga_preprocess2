@@ -114,9 +114,7 @@ def check_timeout(args):
         print(
             f"Check the modified .slurm scripts in {modified_slurm_dir} "
             "and submit them with the following command: "
-            f'"find "{modified_slurm_dir}" -name '
-            '"modified_smriprep_sub-*.sh" -type f | '
-            'while read file; do sbatch "$file"; done'
+            f'"find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done'
         )
 
 
