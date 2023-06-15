@@ -77,8 +77,8 @@ def check_timeout(args):
                     replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=20GB")]
 
                 for s in subjects:
-                    filename = (fmriprep_slurm_output / ".slurm" / f"smriprep_{s}.sh").resolve()
-                    modified_filename = modified_slurm_dir.with_name(f"modified_smriprep_{s}.sh")
+                    filename = fmriprep_slurm_output / f".slurm/smriprep_{s}.sh"
+                    modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
                     create_modified_slurm(filename, modified_filename, replacements)
 
         print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
