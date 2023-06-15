@@ -111,13 +111,13 @@ def check_timeout(args):
                 modified_filename = modified_slurm_dir / f"modified_smriprep_{s}.sh"
                 _create_modified_slurm(filename, modified_filename, replacements)
 
-            print(
-                f"Check the modified .slurm scripts in {modified_slurm_dir} "
-                "and submit them with the following command: "
-                f'"find "{modified_slurm_dir}" -name '
-                '"modified_smriprep_sub-*.sh" -type f | '
-                'while read file; do sbatch "$file"; done'
-            )
+        print(
+            f"Check the modified .slurm scripts in {modified_slurm_dir} "
+            "and submit them with the following command: "
+            f'"find "{modified_slurm_dir}" -name '
+            '"modified_smriprep_sub-*.sh" -type f | '
+            'while read file; do sbatch "$file"; done'
+        )
 
 
 def _slurm_text_replacer(original_time, original_mem, error_subjects, error_type):
