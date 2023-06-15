@@ -74,15 +74,15 @@ def check_timeout(args):
                     replacements = [("--time=36:00:00", "--time=48:00:00"), ("--random-seed 0", "--random-seed 0 --mem-mb 11000")]
                 elif error_type == "tmp_space":
                     print(f"{len(subjects)} subjects ran out of space in local scratch: {subjects}\nAdded request for space and try to resubmit again.")
-                    replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=10GB")]
+                    replacements = [("#SBATCH --mem-per-cpu=12288M", "#SBATCH --mem-per-cpu=12288M\n#SBATCH --tmp=20GB")]
 
                 for s in subjects:
                     filename = (fmriprep_slurm_output / ".slurm" / f"smriprep_{s}.sh").resolve()
                     modified_filename = modified_slurm_dir.with_name(f"modified_smriprep_{s}.sh")
                     create_modified_slurm(filename, modified_filename, replacements)
 
-            print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
-            find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
+        print(f'''Check the modified .slurm scripts in {modified_slurm_dir} and submit them with the following command:
+              find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done''')
 
 def create_modified_slurm(filename, modified_filename, replacements):
     # read the input filename using 'with'
