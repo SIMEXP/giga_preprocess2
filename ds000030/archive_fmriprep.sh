@@ -3,7 +3,7 @@
 #SBATCH --job-name=fmriprep_archive
 #SBATCH --output=/lustre04/scratch/nclarke/logs/ds000030_fmriprep_archive.out
 #SBATCH --error=/lustre04/scratch/nclarke/logs/ds000030_fmriprep_archive.err
-#SBATCH --time=18:00:00
+#SBATCH --time=36:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 
