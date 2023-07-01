@@ -39,4 +39,14 @@ A BIDS competable version of the ABIDE dataset are avalible through [datalad rep
 
 ## Timeseries extraction 
 
-TBA
+The base script is `connectome_slurm_abide.bash`
+Submit the jobs through `submit_connectomes_abide.sh`.
+
+## Archive other things
+
+```
+cd ~/scratch/abide1_connectomes-0.2.0
+tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_connectomes-0.2.0.gz .
+cd ~/scratch/abide1_giga-auto-qc-0.3.1
+tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_giga-auto-qc-0.3.1.gz .
+```

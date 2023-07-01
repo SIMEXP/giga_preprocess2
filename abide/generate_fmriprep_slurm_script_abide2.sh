@@ -22,10 +22,9 @@ for site in ${SITES}; do
         ${OUTPUT_PATH} \
         ${DATASET_PATH}/${site} \
         fmriprep-${VERSION}lts \
-        --fmriprep-args=\"--use-aroma\" \
         --email=${EMAIL} \
-        --time=36:00:00 \
-        --mem-per-cpu=12288 \
+        --time=26:00:00 \
+        --mem-per-cpu=6144 \
         --cpus=1 \
         --container fmriprep-${VERSION}lts
 done
