@@ -6,10 +6,10 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-7
 
-source /lustre03/project/6003287/${USER}/.virtualenvs/giga_connectome/bin/activate
+source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
-ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide2_fmriprep-20.2.7lts_1667762103
-ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide2_connectomes
+ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide2_fmriprep-20.2.7lts
+ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide2_connectomes-0.3.0
 
 WORKINGDIR=${ABIDE2_CONNECTOME}/working_directory
 

@@ -20,4 +20,3 @@ for site in ${SITES}; do
         --export=ATLAS="DiFuMo",SITE=$site \
         ./connectome_slurm_abide2.bash
 done
-

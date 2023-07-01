@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=def-pbellec
-#SBATCH --job-name=abide1_qc
-#SBATCH --output=/lustre04/scratch/hwang1/logs/abide1_qc.%a.out
-#SBATCH --error=/lustre04/scratch/hwang1/logs/abide1_qc.%a.out
+#SBATCH --job-name=abide2_qc
+#SBATCH --output=/lustre04/scratch/hwang1/logs/abide2_qc.%a.out
+#SBATCH --error=/lustre04/scratch/hwang1/logs/abide2_qc.%a.out
 #SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=2G
@@ -10,8 +10,8 @@
 
 source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
-FMRIPREP_PATH=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.7lts
-QC_OUTPUT=/lustre04/scratch/${USER}/abide1_giga-auto-qc-0.3.1
+FMRIPREP_PATH=/lustre04/scratch/${USER}/abide2_fmriprep-20.2.7lts
+QC_OUTPUT=/lustre04/scratch/${USER}/abide2_giga-auto-qc-0.3.1
 SITES=(`ls $FMRIPREP_PATH`)
 
 SITE=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}

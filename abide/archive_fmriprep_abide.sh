@@ -3,7 +3,7 @@
 #SBATCH --job-name=abide1_fmriprep_archive
 #SBATCH --output=/lustre04/scratch/hwang1/logs/abide1_fmriprep_archive.%a.out
 #SBATCH --error=/lustre04/scratch/hwang1/logs/abide1_fmriprep_archive.%a.out
-#SBATCH --time=2:00:00
+#SBATCH --time=12:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 #SBATCH --array=1-24
@@ -21,4 +21,4 @@ site=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}
 echo $site
 cd ${FMRIPREP_PATH}/${site}
 echo $PWD
-tar -vcf ${ARCHIVE_PATH}/${site}.tar.gz .
+tar -vcf ${ARCHIVE_PATH}/${site}.tar .

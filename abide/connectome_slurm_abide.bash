@@ -6,10 +6,10 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-7
 
-source /lustre03/project/6003287/${USER}/.virtualenvs/giga_connectome/bin/activate
+source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
 ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.7lts
-ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide1_connectomes-0.2.0
+ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide1_connectomes-0.3.0
 
 WORKINGDIR=${ABIDE2_CONNECTOME}/working_directory
 
@@ -31,7 +31,8 @@ if [ -d "${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts" ]; then
 		${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts \
 		${SLURM_TMPDIR}/${SITE} \
 		group
-	rsync -rltv --info=progress2 $SLURM_TMPDIR/${SITE} ${ABIDE2_CONNECTOME}/
+	exitcode=$?  # catch exit code
+	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 $SLURM_TMPDIR/${SITE} ${ABIDE2_CONNECTOME}/ ; fi
 else
     echo "no preprocessed data for ${SITE}"
 fi
