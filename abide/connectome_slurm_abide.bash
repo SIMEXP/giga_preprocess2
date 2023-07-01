@@ -36,4 +36,3 @@ if [ -d "${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts" ]; then
 else
     echo "no preprocessed data for ${SITE}"
 fi
-

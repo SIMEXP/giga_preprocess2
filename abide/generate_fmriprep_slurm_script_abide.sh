@@ -28,4 +28,3 @@ for site in ${SITES}; do
         --cpus=1 \
         --container fmriprep-${VERSION}lts
 done
-
