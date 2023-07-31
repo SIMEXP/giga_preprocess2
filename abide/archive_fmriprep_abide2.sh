@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=rrg-pbellec
+#SBATCH --account=def-pbellec
 #SBATCH --job-name=abide2_fmriprep_archive
 #SBATCH --output=/lustre04/scratch/hwang1/logs/abide2_fmriprep_archive.%a.out
 #SBATCH --error=/lustre04/scratch/hwang1/logs/abide2_fmriprep_archive.%a.out
@@ -9,7 +9,7 @@
 #SBATCH --array=1-19
 
 
-FMRIPREP_PATH="/lustre04/scratch/hwang1/abide2_fmriprep-20.2.1lts_1667762103"
+FMRIPREP_PATH="/lustre04/scratch/hwang1/abide2_fmriprep-20.2.7lts"
 SITES=(`ls $FMRIPREP_PATH`)
 DATASET_NAME=`basename $FMRIPREP_PATH`
 
@@ -21,4 +21,4 @@ site=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}
 echo $site
 cd ${FMRIPREP_PATH}/${site}
 echo $PWD
-tar -vcf ${ARCHIVE_PATH}/${site}.tar.gz .
+tar -vcf ${ARCHIVE_PATH}/${site}.tar .
