@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=def-pbellec
 #SBATCH --job-name=fmriprep_archive
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 
