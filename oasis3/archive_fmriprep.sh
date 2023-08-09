@@ -1,7 +1,9 @@
 #!/bin/bash
 #SBATCH --account=def-pbellec
 #SBATCH --job-name=fmriprep_archive
-#SBATCH --time=48:00:00
+#SBATCH --output=/home/nclarke/scratch/logs/oasis_fmri_archive.out
+#SBATCH --error=/home/nclarke/scratch/logs/oasis_fmri_archive.err
+#SBATCH --time=84:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 
