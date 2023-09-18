@@ -46,7 +46,29 @@ Submit the jobs through `submit_connectomes_abide.sh`.
 
 ```
 cd ~/scratch/abide1_connectomes-0.2.0
-tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_connectomes-0.2.0.gz .
+tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_connectomes-0.2.0.tar .
 cd ~/scratch/abide1_giga-auto-qc-0.3.1
-tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_giga-auto-qc-0.3.1.gz .
+tar -vczf ~/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_giga-auto-qc-0.3.1.tar .
+```
+
+## Use the archives
+
+fMRIPrep:
+
+```bash
+# extract file to the scratch
+
+ARCHIVE="/nearline/ctb-pbellec/giga_preprocessing_2/abide1_fmriprep-20.2.7lts/abide1_fmriprep-20.2.7lts"
+SCRATCH_TARGET="~/scratch/abide1_fmriprep-20.2.7lts"
+
+cd $ARCHIVE
+SITES=`ls`
+mkdir $SCRATCH_TARGET
+cd $SCRATCH_TARGET
+
+for site in ${SITES}; do
+    site_name="${site%.*.*}"  # double extension
+    mkdir -p $SCRATCH_TARGET/$site_name
+    tar -xvf $ARCHIVE/$site_name.tar.gz -C $SCRATCH_TARGET/$site_name
+done
 ```

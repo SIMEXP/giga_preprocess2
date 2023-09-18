@@ -21,7 +21,7 @@ mkdir -p $QC_OUTPUT
 echo ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts
 if [ -d "${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts" ]; then
     mkdir -p ${QC_OUTPUT}/${SITE}
-    # rm ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts/layout_index.sqlite
+    rm ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts/layout_index.sqlite
     giga_auto_qc \
         ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts \
         ${QC_OUTPUT}/${SITE} \
