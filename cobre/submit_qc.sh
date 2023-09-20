@@ -10,7 +10,7 @@
 # Load the apptainer module
 module load apptainer
 
-SINGULARITY_IMAGE=/lustre04/scratch/${USER}/giga_auto_qc-0.3.2.simg
+SINGULARITY_IMAGE=$HOME/projects/rrg-pbellec/nclarke/giga_preprocess2/giga_auto_qc-0.3.3.simg
 FMRIPREP_PATH=/lustre04/scratch/${USER}/cobre/COBRE
 
 echo ${FMRIPREP_PATH}
