@@ -15,6 +15,7 @@ WORKINGDIR=${ABIDE2_CONNECTOME}/working_directory
 
 STRATEGIES=("simple" "simple+gsr" "scrubbing.5" "scrubbing.5+gsr" "scrubbing.2" "scrubbing.2+gsr" "acompcor50")
 STRATEGY=${STRATEGIES[${SLURM_ARRAY_TASK_ID} - 1 ]}
+PARTICIPANTS="29580 29584 29588 29592 29596 29601 29605 29609 29613 29617 29621 29626 29630 29634 29581 29585 29589 29593 29597 29602 29606 29610 29614 29618 29627 29631 29635 29582 29586 29590 29594 29598 29603 29607 29611 29615 29619 29624 29628 29632 29583 29587 29591 29595 29600 29604 29608 29612 29616 29620 29625 29629 29633"  # exclude the subject with no cosine regressor
 
 mkdir -p $WORKINGDIR
 
@@ -25,6 +26,7 @@ if [ -d "${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts" ]; then
 	echo "=========$STRATEGY========="
 	echo "${ATLAS}"
 	giga_connectome \
+		--participant_label $PARTICIPANTS \
 		-w ${WORKINGDIR}/${SITE} \
 		--atlas ${ATLAS} \
 		--denoise-strategy ${STRATEGY} \

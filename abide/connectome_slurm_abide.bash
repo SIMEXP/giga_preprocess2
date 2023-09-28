@@ -1,38 +1,42 @@
 #!/bin/bash
 #SBATCH --account=rrg-pbellec
-#SBATCH --output=/lustre04/scratch/hwang1/logs/%x_%A.%a.out
-#SBATCH --error=/lustre04/scratch/hwang1/logs/%x_%A.%a.out
-#SBATCH --time=3:00:00
+#SBATCH --output=/lustre04/scratch/hwang1/logs/%x_%A.out
+#SBATCH --error=/lustre04/scratch/hwang1/logs/%x_%A.out
 #SBATCH --cpus-per-task=1
-#SBATCH --array=1-7
 
-source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
-ABIDE2_FMRIPREP=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.7lts
-ABIDE2_CONNECTOME=/lustre04/scratch/${USER}/abide1_connectomes-0.3.0
+GIGA_CONNECTOME_VERSION=0.4.1
 
-WORKINGDIR=${ABIDE2_CONNECTOME}/working_directory
+GIGA_CONNECTOME=/lustre03/project/6003287/${USER}/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
+FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts/${SITE}
+CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
 
-STRATEGIES=("simple" "simple+gsr" "scrubbing.5" "scrubbing.5+gsr" "scrubbing.2" "scrubbing.2+gsr" "acompcor50")
-STRATEGY=${STRATEGIES[${SLURM_ARRAY_TASK_ID} - 1 ]}
+WORKINGDIR=${CONNECTOME_OUTPUT}/working_directory/${SITE}
+
+module load apptainer/1.1.8
 
 mkdir -p $WORKINGDIR
 
-echo ${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts
-if [ -d "${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts" ]; then
-    mkdir ${WORKINGDIR}/${SITE}
-    mkdir ${ABIDE2_CONNECTOME}/${SITE}
-	echo "=========$STRATEGY========="
+echo "${FMRIPREP_DIR}"
+if [ -d "${FMRIPREP_DIR}" ]; then
+    mkdir ${WORKINGDIR}
+	mkdir ${SLURM_TMPDIR}
+	mkdir ${CONNECTOME_OUTPUT}/${SITE}
+	echo "=========${STRATEGY}========="
 	echo "${ATLAS}"
-	giga_connectome \
-		-w ${WORKINGDIR}/${SITE} \
+	apptainer run \
+		--bind ${FMRIPREP_DIR}:/data/input \
+		--bind ${SLURM_TMPDIR}:/data/output \
+		--bind ${WORKINGDIR}:/data/working \
+		${GIGA_CONNECTOME} \
+		-w /data/working \
 		--atlas ${ATLAS} \
 		--denoise-strategy ${STRATEGY} \
-		${ABIDE2_FMRIPREP}/${SITE}/fmriprep-20.2.7lts \
-		${SLURM_TMPDIR}/${SITE} \
+		/data/input \
+		/data/output \
 		group
 	exitcode=$?  # catch exit code
-	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 $SLURM_TMPDIR/${SITE} ${ABIDE2_CONNECTOME}/ ; fi
+	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 ${SLURM_TMPDIR} ${ABIDE_CONNECTOME}/${SITE} ; fi
 else
     echo "no preprocessed data for ${SITE}"
 fi
