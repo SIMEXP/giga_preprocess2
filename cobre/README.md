@@ -26,3 +26,14 @@ Data was downloaded from [here](http://fcon_1000.projects.nitrc.org/indi/retro/c
 4. `4_create_task-rest_bold.py`
     - creates task-rest_bold.json at the root directory, detailing bold task
 
+## Giga-auto-qc command
+
+```
+module load apptainer
+
+FMRIPREP_DIR=/lustre04/scratch/${USER}/cobre/COBRE/fmriprep-20.2.7lts/derivatives
+GIGA_AUTO_QC_CONTAINER=/home/${USER}/projects/rrg-pbellec/${USER}/giga_preprocess2/giga_auto_qc-0.3.3.simg
+
+apptainer run --cleanenv -B ${FMRIPREP_DIR}:/inputs -B ${SCRATCH}:/outputs ${GIGA_AUTO_QC_CONTAINER} --reindex-bids /inputs /outputs group
+```
+
