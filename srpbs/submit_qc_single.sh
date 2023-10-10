@@ -31,7 +31,7 @@ for subject_dir in $FMRIPREP_PATH/derivatives/sub-*; do
         subject_output_dir="$QC_OUTPUT/$subject_label"
         mkdir -p "$subject_output_dir"
 
-        # Run for the current subject, and let the program create the output file in the subject-specific directory
+        # Run for the current subject
         giga_auto_qc $FMRIPREP_PATH "$subject_output_dir" participant --participant_label $subject_label
     fi
 done
