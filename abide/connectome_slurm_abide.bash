@@ -36,7 +36,7 @@ if [ -d "${FMRIPREP_DIR}" ]; then
 		/data/output \
 		group
 	exitcode=$?  # catch exit code
-	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 ${SLURM_TMPDIR} ${ABIDE_CONNECTOME}/${SITE} ; fi
+	if [ $exitcode -eq 0 ] ; then rsync -rltv --info=progress2 ${SLURM_TMPDIR}/*.h5 ${CONNECTOME_OUTPUT}/${SITE} ; fi
 else
     echo "no preprocessed data for ${SITE}"
 fi
