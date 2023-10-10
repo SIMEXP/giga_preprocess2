@@ -4,7 +4,7 @@ from pathlib import Path
 root_p = Path("/home/nclarke/scratch/srpbs_qc")
 
 # Create a new TSV file for appending the data
-out_p = Path(root_p / "new_file.tsv")
+out_p = Path(root_p / "srpbs_qc.tsv")
 
 # Initialize a flag to identify the first TSV file
 first_tsv = True
