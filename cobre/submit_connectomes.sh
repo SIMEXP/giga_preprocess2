@@ -3,11 +3,11 @@
 GIGA_CONNECTOME_VERSION=0.4.1
 DATASET="cobre"
 
-FMRIPREP_PATH="/lustre04/scratch/${USER}/${DATASET}/COBRE/fmriprep-20.2.7lts/derivatives"
+FMRIPREP_PATH="/lustre04/scratch/nclarke/cobre_fmriprep-20.2.7lts_1683063932/COBRE/fmriprep-20.2.7lts/"
 COBRE_CONNECTOME=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
 
 site=cobre_test
-STRATEGIES="simple simple+gsr scrubbing.5 scrubbing.5+gsr scrubbing.2 scrubbing.2+gsr acompcor50"
+STRATEGIES="simple"
 ATLASES="Schaefer20187Networks MIST DiFuMo"
 
 for strategy in $STRATEGIES; do

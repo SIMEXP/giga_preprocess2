@@ -8,7 +8,7 @@
 GIGA_CONNECTOME_VERSION=0.4.1
 SITE=cobre_test
 GIGA_CONNECTOME=/home/${USER}/projects/rrg-pbellec/containers/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
-FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}/COBRE/fmriprep-20.2.7lts/derivatives
+FMRIPREP_DIR=/lustre04/scratch/nclarke/cobre_fmriprep-20.2.7lts_1683063932/COBRE/fmriprep-20.2.7lts
 CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
 
 WORKINGDIR=${CONNECTOME_OUTPUT}/working_directory/${SITE}
@@ -25,6 +25,7 @@ if [ -d "${FMRIPREP_DIR}" ]; then
 	echo "=========${STRATEGY}========="
 	echo "${ATLAS}"
 	apptainer run \
+		--cleanenv \
 		--bind ${FMRIPREP_DIR}:/data/input \
 		--bind ${SLURM_TMPDIR}:/data/output \
 		--bind ${WORKINGDIR}:/data/working \
@@ -32,6 +33,8 @@ if [ -d "${FMRIPREP_DIR}" ]; then
 		-w /data/working \
 		--atlas ${ATLAS} \
 		--denoise-strategy ${STRATEGY} \
+		--reindex-bids \
+		--calculate-intranetwork-average-correlation \
 		/data/input \
 		/data/output \
 		group
