@@ -7,8 +7,8 @@ FMRIPREP_PATH="/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts_168754972
 CIMAQ=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
 
 site=cimaq_test
-STRATEGIES="simple simple+gsr"
-ATLASES="Schaefer20187Networks"
+STRATEGIES="simple simple+gsr scrubbing.5 scrubbing.5+gsr scrubbing.2 scrubbing.2+gsr acompcor50"
+ATLASES="Schaefer20187Networks MIST DiFuMo"
 
 echo $FMRIPREP_PATH
 
