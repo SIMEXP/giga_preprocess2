@@ -6,8 +6,8 @@ DATASET="cobre"
 FMRIPREP_PATH="/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts_1683063932/COBRE/fmriprep-20.2.7lts"
 CONNECTOME=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
 
-STRATEGIES="simple"
-ATLASES="Schaefer20187Networks MIST"
+STRATEGIES="simple simple+gsr scrubbing.5 scrubbing.5+gsr scrubbing.2 scrubbing.2+gsr acompcor50"
+ATLASES="Schaefer20187Networks MIST DiFuMo"
 
 for strategy in $STRATEGIES; do
     for atlas in $ATLASES; do
