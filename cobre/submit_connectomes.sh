@@ -4,7 +4,7 @@ GIGA_CONNECTOME_VERSION=0.4.1
 DATASET="cobre"
 
 FMRIPREP_PATH="/lustre04/scratch/nclarke/cobre_fmriprep-20.2.7lts_1683063932/COBRE/fmriprep-20.2.7lts/"
-COBRE_CONNECTOME=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
+COBRE_CONNECTOME=/home/nclarke/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
 
 site=cobre_test
 STRATEGIES="simple"

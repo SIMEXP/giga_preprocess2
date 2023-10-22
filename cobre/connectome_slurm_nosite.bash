@@ -31,7 +31,6 @@ if [ -d "${FMRIPREP_DIR}" ]; then
 		-w /data/working \
 		--atlas ${ATLAS} \
 		--denoise-strategy ${STRATEGY} \
-		--reindex-bids \
 		--calculate-intranetwork-average-correlation \
 		/data/input \
 		/data/output \
