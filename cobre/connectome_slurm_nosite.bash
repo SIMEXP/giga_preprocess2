@@ -8,9 +8,9 @@
 GIGA_CONNECTOME_VERSION=0.4.1
 GIGA_CONNECTOME=/home/${USER}/projects/rrg-pbellec/containers/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
 FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts_1683063932/COBRE/fmriprep-20.2.7lts
-CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
+CONNECTOME_OUTPUT=/home/nclarke/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
 
-WORKINGDIR=${CONNECTOME_OUTPUT}/working_directory/
+WORKINGDIR=/home/nclarke/working_directory
 
 module load apptainer/1.1.8
 
