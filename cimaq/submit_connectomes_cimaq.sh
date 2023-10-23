@@ -4,7 +4,7 @@ GIGA_CONNECTOME_VERSION=0.4.1
 DATASET="cimaq"
 
 FMRIPREP_PATH="/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts_1687549726/CIMAQ/fmriprep-20.2.7lts/derivatives"
-CIMAQ=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}
+CIMAQ_CONNECTOME="/home/nclarke/cimaq_connectomes-0.4.1"
 
 site=cimaq_test
 STRATEGIES="simple simple+gsr scrubbing.5 scrubbing.5+gsr scrubbing.2 scrubbing.2+gsr acompcor50"

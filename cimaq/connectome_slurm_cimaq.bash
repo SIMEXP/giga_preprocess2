@@ -9,9 +9,9 @@ GIGA_CONNECTOME_VERSION=0.4.1
 SITE=cimaq_test
 GIGA_CONNECTOME=/home/${USER}/projects/rrg-pbellec/containers/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
 FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts_1687549726/CIMAQ/fmriprep-20.2.7lts/derivatives
-CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
+CONNECTOME_OUTPUT="/home/nclarke/cimaq_connectomes-0.4.1/"
 
-WORKINGDIR=${CONNECTOME_OUTPUT}/working_directory/${SITE}
+WORKINGDIR="/home/nclarke/cimaq_connectomes-0.4.1/working_directory/cimaq_test"
 
 module load apptainer/1.1.8
 
@@ -32,7 +32,6 @@ if [ -d "${FMRIPREP_DIR}" ]; then
 		-w /data/working \
 		--atlas ${ATLAS} \
 		--denoise-strategy ${STRATEGY} \
-		--reindex-bids \
 		--calculate-intranetwork-average-correlation \
 		/data/input \
 		/data/output \
