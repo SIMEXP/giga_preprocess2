@@ -22,7 +22,7 @@ A BIDS competable version of the ABIDE dataset are avalible through [datalad rep
 
     A minimal use case of this version:
 
-    ```basg
+    ```bash
     bash ./fmriprep_slurm_singularity_run.bash \
             ${OUTPUT_ROOT_PATH} \
             ${BIDS_DATASET_PATH} \
