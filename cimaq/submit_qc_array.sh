@@ -25,6 +25,6 @@ mkdir -p $PARTICIPANT_OUTPUT
 
 echo "Running ${PARTICIPANT_LABEL} QC"
 
-apptainer run --cleanenv -B ${FMRIPREP_DIR}:/inputs -B ${PARTICIPANT_OUTPUT}:/outputs ${GIGA_AUTO_QC_CONTAINER} --reindex-bids /inputs /outputs participant --participant_label ${PARTICIPANT_LABEL}
+apptainer run --cleanenv -B ${FMRIPREP_DIR}:/inputs -B ${PARTICIPANT_OUTPUT}:/outputs ${GIGA_AUTO_QC_CONTAINER} /inputs /outputs participant --participant_label ${PARTICIPANT_LABEL}
 
 
