@@ -2,7 +2,6 @@
 #SBATCH --account=def-pbellec
 
 DATASET="cimaq"
-CONNECTOME_OUTPUT=/home/nclarke/scratch/cimaq_connectomes-0.4.1
 
 STRATEGIES="simple" #"simple+gsr" "scrubbing.2" "scrubbing.2+gsr" "scrubbing.5" "scrubbing.5+gsr" "acompcor50"
 ATLASES=("Schaefer20187Networks" "MIST" "DiFuMo")
