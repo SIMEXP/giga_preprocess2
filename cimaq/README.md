@@ -12,7 +12,7 @@ Data was downloaded from the LORIS platform after obtaining appropriate data acc
 
 ## Notes on connectome generation
 - Ran on narval and moved to Beluga nearline (same for QC).
-- If timed-out, re-ran with increased wall time.
+- Most participants completed in less than one minute. If timed-out, re-ran with increased wall time.
 - The following subjects are missing cosine regressors (realised after I had submitted the array): \
 **memory only**: 4331322, 5788838, 7485585, 8069157, 5036272, 8060583, 7720517, 6417837, 5359706, 7853010 \
 **rest only**: 6371164
