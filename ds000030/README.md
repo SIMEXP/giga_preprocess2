@@ -6,4 +6,5 @@ Scripts for preprocessing the UCLA Consortium for Neuropsychiatric Phenomics LA5
 ## Retrieving data
 Data is openly available on Open Neuro. See `download_dataset.sh` script.
 ## Note on connectome generation
-Run `generate_connnectome_slurm.sh`. Edit one script so it includes the `--reindex-bids` flag. Submit, wait until completed. Submit all other script.
+- Run `generate_connnectome_slurm.sh`. Edit one script so it includes the `--reindex-bids` flag. Submit, wait until completed. Submit all other scripts.
+- Was run on narval.
