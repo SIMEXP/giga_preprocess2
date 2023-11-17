@@ -7,5 +7,5 @@ mkdir -p ${OPENNEURO_PATH}
 echo "Get ${DATASET}"
 cd ${OPENNEURO_PATH}
 datalad install https://github.com/OpenNeuroDatasets/${DATASET}.git
-cd ${DATASET}
-datalad get . -r
+cd /lustre04/scratch/${USER}/openneuro/ds000030
+datalad get -r .
