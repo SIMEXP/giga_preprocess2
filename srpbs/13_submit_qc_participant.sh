@@ -23,7 +23,7 @@ for subject_dir in $FMRIPREP_PATH/derivatives/sub-*; do
     subject_label=$(basename $subject_dir)
     subject_label=${subject_label#sub-}  # Remove "sub-"
 
-    # Check if the subject number is greater than or equal to "0468"
+    # Check if the subject number is greater than or equal to "0468" - this is because I ran it once and it timed out, so ran for the rest
     if [ "$subject_label" -ge "0468" ]; then
         echo "Processing subject: $subject_label"
 
