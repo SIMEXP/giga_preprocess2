@@ -42,6 +42,4 @@ Data was downloaded from [here](https://bicr-resource.atr.jp/srpbsopen/) after c
     - Once complete, do `ls -d sub-* | grep -v '\.html$' | sed 's/sub-//' | tail -n 399 > /home/nclarke/participant_labels.txt`, and make sure number of array jobs is `1-399`.
 - `17_check_participant_missing_h5.py` checks which subjects failed in the previous step.
 - `18_connectome_slurm_array_missing.bash` and `18_submit_connectome_array_missing.sh` submit any failed atlas/strategy pairs one by one. Use the portal to check if jobs are timed out/ OOM and adjust accordingly, but if they failed after that will be due to no frames left after scrubbing.
-- `19_archive_connectome.sh` since ran on Narval, then moved to Beluga nearline.
-
-Note, QC and connectomes ran on Narval and moved to Beluga nearline.
+- `19_archive_connectome.sh` note, ran on Narval and moved to Beluga nearline.
