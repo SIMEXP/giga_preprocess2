@@ -9,7 +9,7 @@ EMAIL=${SLACK_EMAIL_BOT}
 module load singularity/3.8
 echo "Create fmriprep-slurm scripts for COMPASS-ND"
 
-DATASET_PATH="/lustre04/scratch/${USER}/compass-nd"
+DATASET_PATH="/lustre04/scratch/${USER}/compass-nd/bids_release_7"
 echo $DATASET_PATH
 time=`date +%s`
 OUTPUT_PATH="/lustre04/scratch/nclarke/compass-nd_fmriprep-${VERSION}lts"
@@ -30,7 +30,7 @@ bash ../scripts/fmriprep_slurm_singularity_run.bash \
     fmriprep-${VERSION}lts \
     --fmriprep-args=\"--ignore slicetiming fieldmaps\" \
     --email=${EMAIL} \
-    --time=36:00:00 \
+    --time=24:00:00 \
     --mem-per-cpu=12288 \
     --cpus=1 \
     --container fmriprep-${VERSION}lts

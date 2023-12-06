@@ -1,7 +1,7 @@
 import json
 
 # Path to directory where task-rest_bold.json will be created
-path = "/home/nclarke/scratch/compass_nd/bids_release_7/"
+path = "/home/nclarke/scratch/compass-nd/bids_release_7/"
 
 # JSON file content
 json_content = {"TaskName": "rest"}
