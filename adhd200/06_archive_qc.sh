@@ -1,6 +1,6 @@
 
 DATASET=adhd200
-GIGA_AUTO_QC_VERSION=0.3.3
+GIGA_AUTO_QC_VERSION=0.3.4
 QC_OUTPUT=${SCRATCH}/${DATASET}_giga-auto-qc-${GIGA_AUTO_QC_VERSION}/
 NEARLINE_ROOT="/nearline/ctb-pbellec/giga_preprocessing_2"
 

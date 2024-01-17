@@ -25,7 +25,7 @@ for atlas in $ATLASES; do
             echo "Submitting ${site} ${atlas} ${STRATEGY}"
             sbatch \
                 --time=${time} --mem-per-cpu=${mem} \
-                --job-name=${DATASET}_${site}_${atlas}_${strategy} \
+                --job-name=${DATASET}_${site}_${atlas}_${STRATEGY} \
                 --export=DATASET="${DATASET}",SITE="${site}",ATLAS="${atlas}",STRATEGY="${STRATEGY}" \
                 ./connectome_slurm.bash
         else

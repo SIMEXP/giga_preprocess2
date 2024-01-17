@@ -3,7 +3,7 @@
 #SBATCH --job-name=fmriprep_archive
 #SBATCH --output=/lustre04/scratch/hwang1/logs/fmriprep_archive.%a.out
 #SBATCH --error=/lustre04/scratch/hwang1/logs/fmriprep_archive.%a.out
-#SBATCH --time=12:00:00
+#SBATCH --time=24:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 #SBATCH --array=1-10
