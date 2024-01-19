@@ -9,22 +9,22 @@ ABIDE_CONNECTOME=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECT
 SITES=`ls $FMRIPREP_PATH`
 STRATEGIES="simple simple+gsr scrubbing.5 scrubbing.5+gsr scrubbing.2 scrubbing.2+gsr acompcor50"
 ATLASES="Schaefer20187Networks MIST DiFuMo"
-
+SITES="IU_1 KUL_3 OHSU_1 ONRC_2"
 for strategy in $STRATEGIES; do
     for atlas in $ATLASES; do
         for site in $SITES; do
             mem=8G
-            time="3:00:00"
+            time="4:00:00"
 
-            if [ "${site}" == "ONRC_2"]; then
+            if [ "${site}" == "ONRC_2" ]; then
                 time="12:00:00"
                 mem=16G
             fi
 
             if [ "${atlas}" == "DiFuMo" ]; then
-                time="6:00:00"
-                mem=32G
-                if [ "${site}" == "ONRC_2"]; then
+                time="12:00:00"
+                mem=64G
+                if [ "${site}" == "ONRC_2" ]; then
                     time="24:00:00"
                     mem=64G
                 fi
