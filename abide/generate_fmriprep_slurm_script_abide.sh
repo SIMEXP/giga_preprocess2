@@ -1,13 +1,18 @@
 #!/bin/bash
+# generate fmriprep slurm scripts for ABIDE dataset
+# usage: bash generate_fmriprep_slurm_script_abide2.sh <dataset>
+
+DATASET=$1
+
 CONTAINER_PATH="/lustre03/project/6003287/containers"
 VERSION="20.2.7"
 EMAIL=${SLACK_EMAIL_BOT}
 
 module load singularity/3.8
-echo "Create fmriprep-slurm scripts for abide"
+echo "Create fmriprep-slurm scripts for ${DATASET}"
 
-DATASET_PATH="/lustre04/scratch/hwang1/abide"
-OUTPUT_PATH="/lustre04/scratch/hwang1/abide1_fmriprep-${VERSION}lts"
+DATASET_PATH="/lustre04/scratch/hwang1/${DATASET}/"
+OUTPUT_PATH="/lustre04/scratch/hwang1/${DATASET}_fmriprep-${VERSION}lts"
 SITES=`ls $DATASET_PATH`
 
 mkdir -p $OUTPUT_PATH
@@ -23,8 +28,8 @@ for site in ${SITES}; do
         ${DATASET_PATH}/${site} \
         fmriprep-${VERSION}lts \
         --email=${EMAIL} \
-        --time=36:00:00 \
-        --mem-per-cpu=12288 \
+        --time=26:00:00 \
+        --mem-per-cpu=6144 \
         --cpus=1 \
         --container fmriprep-${VERSION}lts
 done

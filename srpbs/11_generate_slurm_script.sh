@@ -1,15 +1,18 @@
 #!/bin/bash
+#SBATCH --mem-per-cpu=12288
+#SBATCH --time=02:00:00
+
 CONTAINER_PATH="/lustre03/project/6003287/containers"
 VERSION="20.2.7"
 EMAIL=${SLACK_EMAIL_BOT}
 
 module load singularity/3.8
-echo "Create fmriprep-slurm scripts for adni"
+echo "Create fmriprep-slurm scripts for SRPBS"
 
-DATASET_PATH="/lustre04/scratch/${USER}/adni_bids_output_func"
+DATASET_PATH="/lustre04/scratch/${USER}/SRPBS_OPEN_bids/data"
 echo $DATASET_PATH
 time=`date +%s`
-OUTPUT_PATH="/lustre04/scratch/${USER}/adni_fmriprep-${VERSION}lts_${time}"
+OUTPUT_PATH="/lustre04/scratch/nclarke/srpbs_fmriprep-${VERSION}lts_${time}"
 
 mkdir -p $OUTPUT_PATH
 
@@ -25,7 +28,7 @@ bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${OUTPUT_PATH} \
     ${DATASET_PATH} \
     fmriprep-${VERSION}lts \
-    --fmriprep-args=\"--use-aroma\" \
+    --fmriprep-args=\"--ignore slicetiming fieldmaps\" \
     --email=${EMAIL} \
     --time=36:00:00 \
     --mem-per-cpu=12288 \

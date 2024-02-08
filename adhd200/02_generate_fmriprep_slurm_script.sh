@@ -1,13 +1,16 @@
 #!/bin/bash
+
+DATASET=adhd200
+
 CONTAINER_PATH="/lustre03/project/6003287/containers"
 VERSION="20.2.7"
 EMAIL=${SLACK_EMAIL_BOT}
 
 module load singularity/3.8
-echo "Create fmriprep-slurm scripts for abide2"
+echo "Create fmriprep-slurm scripts for ${DATASET}"
 
-DATASET_PATH="/lustre04/scratch/hwang1/abide2/"
-OUTPUT_PATH="/lustre04/scratch/hwang1/abide2_fmriprep-${VERSION}lts"
+DATASET_PATH="/lustre04/scratch/hwang1/${DATASET}/"
+OUTPUT_PATH="/lustre04/scratch/hwang1/${DATASET}_fmriprep-${VERSION}lts"
 SITES=`ls $DATASET_PATH`
 
 mkdir -p $OUTPUT_PATH
