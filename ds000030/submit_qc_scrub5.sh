@@ -3,9 +3,9 @@
 #SBATCH --job-name=ds000030_qc
 #SBATCH --output=/lustre04/scratch/nclarke/logs/%x_%A.out
 #SBATCH --error=/lustre04/scratch/nclarke/logs/%x_%A.out
-#SBATCH --time=24:00:00
+#SBATCH --time=04:00:00
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=12G
+#SBATCH --mem=8G
 
 module load apptainer
 
