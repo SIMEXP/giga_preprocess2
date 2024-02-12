@@ -7,7 +7,7 @@
 
 GIGA_CONNECTOME_VERSION=0.4.1
 SITE=IP_1
-GIGA_CONNECTOME=/lustre03/project/6003287/${USER}/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
+GIGA_CONNECTOME=/lustre03/project/6003287/containers/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
 FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts/${SITE}
 CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_connectomes-${GIGA_CONNECTOME_VERSION}/
 

@@ -8,24 +8,31 @@
 #SBATCH --mem-per-cpu=2G
 #SBATCH --array=1-24
 
-source /lustre03/project/6003287/${USER}/.virtualenvs/giga_auto_qc/bin/activate
 
-FMRIPREP_PATH=/lustre04/scratch/${USER}/abide1_fmriprep-20.2.7lts
-QC_OUTPUT=/lustre04/scratch/${USER}/abide1_giga-auto-qc-0.3.1
-SITES=(`ls $FMRIPREP_PATH`)
-
+GIGA_AUTO_QC_VERSION=0.3.3
+DATASET=abide1
 SITE=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}
+
+CONTAINER=/lustre03/project/6003287/${USER}/giga_auto_qc-${GIGA_AUTO_QC_VERSION}.simg
+FMRIPREP_DIR=/lustre04/scratch/${USER}/${DATASET}_fmriprep-20.2.7lts/${SITE}
+QC_OUTPUT=/lustre04/scratch/${USER}/${DATASET}_giga-auto-qc-${GIGA_AUTO_QC_VERSION}/
+
+module load apptainer/1.1.8
 
 mkdir -p $QC_OUTPUT
 
-echo ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts
-if [ -d "${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts" ]; then
+echo ${FMRIPREP_DIR}
+if [ -d "${FMRIPREP_DIR}" ]; then
     mkdir -p ${QC_OUTPUT}/${SITE}
-    # rm ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts/layout_index.sqlite
-    giga_auto_qc \
-        ${FMRIPREP_PATH}/${SITE}/fmriprep-20.2.7lts \
-        ${QC_OUTPUT}/${SITE} \
+    apptainer run \
+        --bind ${FMRIPREP_DIR}:/data/input \
+        --bind ${QC_OUTPUT}/${SITE}:/data/output \
+        ${CONTAINER} \
+        --reindex-bids \
+        /data/input \
+		/data/output \
 		group
+    exitcode=$?  # catch exit code
 else
     echo "no preprocessed data for ${SITE}"
 fi
