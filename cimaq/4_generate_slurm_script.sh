@@ -1,15 +1,18 @@
 #!/bin/bash
+#SBATCH --mem-per-cpu=12288
+#SBATCH --time=2:00:00
+
 CONTAINER_PATH="/lustre03/project/6003287/containers"
 VERSION="20.2.7"
 EMAIL=${SLACK_EMAIL_BOT}
 
 module load singularity/3.8
-echo "Create fmriprep-slurm scripts for ds000030"
+echo "Create fmriprep-slurm scripts for cima-q"
 
-DATASET_PATH="/lustre04/scratch/${USER}/openneuro/ds000030"
+DATASET_PATH="/lustre04/scratch/${USER}/CIMAQ"
 echo $DATASET_PATH
 time=`date +%s`
-OUTPUT_PATH="/lustre04/scratch/nclarke/ds000030_fmriprep-${VERSION}lts_${time}"
+OUTPUT_PATH="/lustre04/scratch/nclarke/cimaq_fmriprep-${VERSION}lts_${time}"
 
 mkdir -p $OUTPUT_PATH
 
@@ -25,6 +28,7 @@ bash ../scripts/fmriprep_slurm_singularity_run.bash \
     ${OUTPUT_PATH} \
     ${DATASET_PATH} \
     fmriprep-${VERSION}lts \
+    --fmriprep-args=\"--ignore slicetiming fieldmaps\" \
     --email=${EMAIL} \
     --time=36:00:00 \
     --mem-per-cpu=12288 \

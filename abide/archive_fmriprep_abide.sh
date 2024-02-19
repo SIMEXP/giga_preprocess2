@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=def-pbellec
-#SBATCH --job-name=abide2_fmriprep_archive
-#SBATCH --output=/lustre04/scratch/hwang1/logs/abide2_fmriprep_archive.%a.out
-#SBATCH --error=/lustre04/scratch/hwang1/logs/abide2_fmriprep_archive.%a.out
+#SBATCH --job-name=abide1_fmriprep_archive
+#SBATCH --output=/lustre04/scratch/hwang1/logs/abide1_fmriprep_archive.%a.out
+#SBATCH --error=/lustre04/scratch/hwang1/logs/abide1_fmriprep_archive.%a.out
 #SBATCH --time=12:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
-#SBATCH --array=1-19
+#SBATCH --array=1-24
 
 
-FMRIPREP_PATH="/lustre04/scratch/hwang1/abide2_fmriprep-20.2.7lts"
+FMRIPREP_PATH="/lustre04/scratch/hwang1/abide1_fmriprep-20.2.7lts"
 SITES=(`ls $FMRIPREP_PATH`)
 DATASET_NAME=`basename $FMRIPREP_PATH`
 
