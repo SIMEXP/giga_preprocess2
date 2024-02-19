@@ -3,7 +3,7 @@
 #SBATCH --job-name=conn_archive
 #SBATCH --output=/lustre04/scratch/nclarke/logs/%x_%A.out
 #SBATCH --error=/lustre04/scratch/nclarke/logs/%x_%A.err
-#SBATCH --time=01:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=8G
 
