@@ -32,14 +32,15 @@ Data was downloaded from [here](https://bicr-resource.atr.jp/srpbsopen/) after c
 - `12_archive_fmriprep.sh`
 
 ## Run QC
-- `13_submit_qc_participant.sh`
+- `13_submit_qc_participant.sh`. Run once with `--reindex-bids` flag and one participant first to build the database (increase wall time).
 - `14_archive_qc.sh`
 
 ## Generate connectomes
-- `15_setup_connectome.sh` creates the BIDS database/layout.
-- `16_submit_connectome.sh` loops through each participant and generates connectomes for each atlas and strategy pair.
+- `15_submit_connectome.sh` loops through each participant and generates connectomes for each atlas and strategy pair. As above, build database first (one atlas and strategy).
     - To stay under the 1000 job limit, do `ls -d sub-* | grep -v '\.html$' | sed 's/sub-//' | head -n 1000 > /home/nclarke/participant_labels.txt`, and make sure number of array jobs is `1-1000`.
     - Once complete, do `ls -d sub-* | grep -v '\.html$' | sed 's/sub-//' | tail -n 399 > /home/nclarke/participant_labels.txt`, and make sure number of array jobs is `1-399`.
-- `17_check_participant_missing_h5.py` checks which subjects failed in the previous step.
-- `18_connectome_slurm_array_missing.bash` and `18_submit_connectome_array_missing.sh` submit any failed atlas/strategy pairs one by one. Use the portal to check if jobs are timed out/ OOM and adjust accordingly, but if they failed after that will be due to no frames left after scrubbing.
-- `19_archive_connectome.sh` since ran on Narval, then moved to Beluga nearline.
+- `16_check_participant_missing_h5.py` checks which subjects failed in the previous step.
+- `17_connectome_slurm_array_missing.bash` and `17_submit_connectome_array_missing.sh` submit any failed atlas/strategy pairs one by one. Use the portal to check if jobs are timed out/ OOM and adjust accordingly, but if they failed after that will be due to no frames left after scrubbing.
+- `18_archive_connectome.sh`
+
+n.b. Some proceses ran on Narval and moved to Beluga nearline.
