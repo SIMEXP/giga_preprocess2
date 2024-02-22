@@ -12,7 +12,7 @@ module load apptainer
 
 FMRIPREP_DIR=/lustre04/scratch/${USER}/oasis3_bids/fmriprep-20.2.7lts
 GIGA_AUTO_QC_CONTAINER=/lustre03/project/rrg-pbellec/${USER}/giga_preprocess2/giga_auto_qc-0.3.3.simg
-QC_OUTPUT=/lustre04/scratch/${USER}/oasis_giga_auto_qc-0.3.3_scrub.5
+QC_OUTPUT=/lustre04/scratch/${USER}/oasis3_giga_auto_qc-0.3.3_scrub.5
 QC_PARAMS=/lustre03/project/rrg-pbellec/${USER}/giga_preprocess2/qc_params_scrub5.json
 participant_labels=/lustre03/project/rrg-pbellec/${USER}/giga_preprocess2/oasis3/participant_labels.txt # One subject number per line
 
