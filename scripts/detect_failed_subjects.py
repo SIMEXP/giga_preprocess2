@@ -9,6 +9,8 @@ error_keywords = {
     "out_of_memory": r"\bout-of-memory\b",
     "tmp_space": r"\bNo space left on device\b",
     "workflow": r"\bnipype.workflow ERROR\b",
+    "missing_T1": r"\bAll workflows require T1w images\b",
+    "missing_bold": r"\bAll workflows require BOLD images\b",
 }
 
 
@@ -27,6 +29,10 @@ error_message = {
     ),
     "workflow": Template(
         "$n_subject subjects were timed out and error did not get propagated: $subject_list"
+    ),
+    "missing_T1": Template("$n_subject subjects are missing T1w images: $subject_list"),
+    "missing_bold": Template(
+        "$n_subject subjects are missing BOLD images: $subject_list"
     ),
 }
 
@@ -52,13 +58,21 @@ def check_timeout(args):
         "out_of_memory": set(),
         "tmp_space": set(),
         "workflow": set(),
+        "missing_T1": set(),
+        "missing_bold": set(),
     }
 
     for s in failed_subjects:
         try:
             with open(fmriprep_slurm_output / f"smriprep_{s}.err") as f:
                 txt = f.read()
-                for error_type in ["timeout", "out_of_memory", "tmp_space"]:
+                for error_type in [
+                    "timeout",
+                    "out_of_memory",
+                    "tmp_space",
+                    "missing_T1",
+                    "missing_bold",
+                ]:
                     if re.search(error_keywords[error_type], txt):
                         error_subjects[error_type].add(s)
         except FileNotFoundError:
@@ -92,11 +106,31 @@ def check_timeout(args):
             )
         )
 
+    if error_subjects["missing_T1"]:
+        print(
+            error_message["missing_T1"].substitute(
+                n_subject=len(error_subjects["missing_T1"]),
+                subject_list=error_subjects["missing_T1"],
+            )
+        )
+
+    if error_subjects["missing_bold"]:
+        print(
+            error_message["missing_bold"].substitute(
+                n_subject=len(error_subjects["missing_bold"]),
+                subject_list=error_subjects["missing_bold"],
+            )
+        )
+
     if _check_resubmit_subject(error_subjects):
         modified_slurm_dir = fmriprep_slurm_output / ".slurm_modified"
         modified_slurm_dir.mkdir(exist_ok=True)
 
         for error_type, subjects in error_subjects.items():
+            # Skip subjects with missing T1 or BOLD images
+            if error_type in ["missing_T1", "missing_bold"]:
+                continue
+
             if not subjects:
                 continue
 
@@ -114,7 +148,7 @@ def check_timeout(args):
         print(
             f"Check the modified .slurm scripts in {modified_slurm_dir} "
             "and submit them with the following command: "
-            f'"find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done'
+            f'"find "{modified_slurm_dir}" -name "modified_smriprep_sub-*.sh" -type f | while read file; do sbatch "$file"; done"'
         )
 
 
