@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --account=def-pbellec
-#SBATCH --output=/lustre07/scratch/nclarke/logs/srpbs_conn/%x_%A.out
-#SBATCH --error=/lustre07/scratch/nclarke/logs/srpbs_conn/%x_%A.out
+#SBATCH --job-name=conn
+#SBATCH --output=/lustre07/scratch/nclarke/logs/%x_%A.out
+#SBATCH --error=/lustre07/scratch/nclarke/logs/%x_%A.out
 #SBATCH --cpus-per-task=1
 
 GIGA_CONNECTOME_VERSION=0.4.1
 GIGA_CONNECTOME="/home/nclarke/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg"
-FMRIPREP_DIR="/home/nclarke/scratch/srpbs_fmriprep-20.2.7lts_1691842839/data/fmriprep-20.2.7lts/derivatives"
-CONNECTOME_OUTPUT="/lustre07/scratch/nclarke/srpbs_connectomes-${GIGA_CONNECTOME_VERSION}"
+FMRIPREP_DIR="/lustre07/scratch/nclarke/srpbs_fmriprep-20.2.7lts_1691842839/data/fmriprep-20.2.7lts/derivatives"
+CONNECTOME_OUTPUT="/lustre07/scratch/nclarke/srpbs_connectome-0.4.1"
 WORKINGDIR="${CONNECTOME_OUTPUT}/working_directory"
 
 module load apptainer

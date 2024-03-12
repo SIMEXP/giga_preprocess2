@@ -1,7 +1,7 @@
 import os
 
 # Directory containing sub-directories
-main_directory = "/home/nclarke/scratch/srpbs_connectomes-0.4.1"
+main_directory = "/home/nclarke/scratch/srpbs_connectome-0.4.1"
 
 # List of file endings to check for
 file_endings_to_check = [
