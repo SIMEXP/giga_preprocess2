@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=rrg-pbellec
-#SBATCH --job-name=auto_qc
+#SBATCH --job-name=adhd200_auto_qc
 #SBATCH --output=/lustre04/scratch/hwang1/logs/auto_qc.%a.out
 #SBATCH --error=/lustre04/scratch/hwang1/logs/auto_qc.%a.out
 #SBATCH --time=6:00:00
@@ -16,6 +16,7 @@ SITE=${SITES[${SLURM_ARRAY_TASK_ID} - 1 ]}
 CONTAINER=/lustre03/project/6003287/containers/giga_auto_qc-${GIGA_AUTO_QC_VERSION}.simg
 FMRIPREP_DIR=${SCRATCH}/${DATASET}_fmriprep-20.2.7lts/${SITE}/fmriprep-20.2.7lts
 QC_OUTPUT=${SCRATCH}/${DATASET}_giga-auto-qc-${GIGA_AUTO_QC_VERSION}/
+QC_PARAMS=/lustre03/project/6003287/${USER}/giga_preprocess2/${DATASET}/qc_params_scrub5.json
 
 module load apptainer/1.1.8
 
@@ -27,13 +28,14 @@ if [ -d "${FMRIPREP_DIR}" ]; then
     rm ${FMRIPREP_DIR}/layout_index.sqlite*
     echo "Running giga_auto_qc for ${SITE}"
     apptainer run \
+	--bind ${QC_PARAMS}:/data/qc_params_scrub5.json \
         --bind ${FMRIPREP_DIR}:/data/input \
         --bind ${QC_OUTPUT}/${SITE}:/data/output \
         ${CONTAINER} \
-        --reindex-bids \
+	--quality_control_parameters /data/qc_params_scrub5.json \
         /data/input \
-		/data/output \
-		group
+	/data/output \
+	group
     exitcode=$?  # catch exit code
 else
     echo "no preprocessed data for 05_qc.sh${SITE}"
