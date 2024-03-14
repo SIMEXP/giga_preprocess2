@@ -3,6 +3,11 @@
 Create SLURM scripts for preprocessing ABIDE 1 and 2 wih fMRIPrep.
 The process was done on Compute Canada Beluga.
 
+## Notes on dataset
+
+abide2/NYU_2 couldn't be processed with fmriprep with default setting after several attempts hence dropped.
+
+
 ## Dependency
 
 - datalad
