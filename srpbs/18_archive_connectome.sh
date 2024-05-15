@@ -8,7 +8,8 @@
 #SBATCH --mem=4G
 
 
-RAW_PATH="/home/nclarke/scratch/srpbs_connectomes-0.4.1"
+RAW_PATH="/home/nclarke/scratch//home/nclarke/scratch/srpbs_connectome-0.4.1_MIST_afc
+"
 DATASET_NAME=`basename $RAW_PATH`
 
 ARCHIVE_PATH="/lustre06/nearline/6035398/nclarke/${DATASET_NAME}"
