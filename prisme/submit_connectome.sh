@@ -4,20 +4,20 @@
 #SBATCH --output=/lustre04/scratch/nclarke/logs/%x_%A.out
 #SBATCH --error=/lustre04/scratch/nclarke/logs/%x_%A.err
 #SBATCH --cpus-per-task=1
-#SBATCH --time=34:00:00
+#SBATCH --time=72:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=34G
 
 GIGA_CONNECTOME_VERSION=0.4.1
 GIGA_CONNECTOME=/lustre03/project/6003287/containers/giga_connectome-${GIGA_CONNECTOME_VERSION}.simg
 FMRIPREP_DIR=/lustre04/scratch/${USER}/prisme.fmriprep
-CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/prisme_connectome-${GIGA_CONNECTOME_VERSION}
+CONNECTOME_OUTPUT=/lustre04/scratch/${USER}/prisme_connectome-${GIGA_CONNECTOME_VERSION}_150524
 WORKINGDIR=${CONNECTOME_OUTPUT}/working_directory
 ATLAS_CONFIG=/lustre03/project/6003287/${USER}/ColeAnticevic12.json
 ATLAS_PATH=/home/${USER}/.cache/templateflow
 export APPTAINERENV_TEMPLATEFLOW_HOME=/templateflow
 
-module load apptainer/1.1.8
+module load apptainer
 
 mkdir -p ${WORKINGDIR}
 
