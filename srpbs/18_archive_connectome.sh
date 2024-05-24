@@ -8,7 +8,7 @@
 #SBATCH --mem=4G
 
 
-RAW_PATH="/home/nclarke/scratch//home/nclarke/scratch/srpbs_connectome-0.4.1_MIST_afc
+RAW_PATH="/home/nclarke/scratch/srpbs_connectome-0.4.1_MIST_afc
 "
 DATASET_NAME=`basename $RAW_PATH`
 
