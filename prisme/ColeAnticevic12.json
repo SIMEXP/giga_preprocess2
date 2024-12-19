@@ -1,0 +1,11 @@
+{
+    "name": "coleanticevic",
+    "parameters": {
+        "atlas": "coleanticevic",
+        "template": "MNI152NLin6Asym",
+        "resolution": "3",
+        "suffix": "dseg"
+    },
+    "desc":"12parcels",
+    "templateflow_dir": null
+}
