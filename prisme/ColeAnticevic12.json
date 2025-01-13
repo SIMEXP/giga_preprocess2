@@ -2,8 +2,8 @@
     "name": "coleanticevic",
     "parameters": {
         "atlas": "coleanticevic",
-        "template": "MNI152NLin6Asym",
-        "resolution": "3",
+        "template": "MNI152NLin2009cAsym",
+        "resolution": "1",
         "suffix": "dseg"
     },
     "desc":"12parcels",
