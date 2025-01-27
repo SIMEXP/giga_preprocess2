@@ -1,0 +1,11 @@
+{
+    "name": "brainnetome",
+    "parameters": {
+        "atlas": "brainnetome",
+        "template": "MNI152NLin2009cAsym",
+        "resolution": "02",
+        "suffix": "dseg"
+    },
+    "desc":"246parcels",
+    "templateflow_dir": null
+}
