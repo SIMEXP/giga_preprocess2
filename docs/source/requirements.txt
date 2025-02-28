@@ -1,0 +1,6 @@
+sphinx-book-theme
+myst-parser
+sphinx
+jupytext
+nbsphinx
+sphinx-copybutton
