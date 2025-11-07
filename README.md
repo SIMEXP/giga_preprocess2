@@ -14,3 +14,7 @@ git clone  git@github.com:SIMEXP/giga_preprocess2.git
 - Shared command line tool in `scripts/`
   - `fmriprep_slurm_singularity_run.bash`: modified version of `fmriprep-slurm` accompanied script. Allow specifying output directory.
 - Documentation in `docs`
+
+## Preprocessed data on Rorqual
+
+`/project/ctb-pbellec/hwang1/giga_preprocessing_2/`
