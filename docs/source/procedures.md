@@ -68,13 +68,14 @@ Alternatively, see the script for abide to archive by site on the SLRUM schedule
     
 ### Timeseries extraction 
 
-[WIP](https://github.com/SIMEXP/giga_connectome)
+It used giga connectome 0.4.1.
+Documentation on the outputs: https://giga-connectome.readthedocs.io/en/0.4.1/outputs.html
 
-To work within the limitation of the file storage policy, we will work in the user's home scratch. The procedure is as followed:
+To comply with the file storage policy, we will use the user's home scratch. The procedure is as follows:
 
 - Copy the fMRIPrep output from nearline to scratch, untar
 - Run the connectome tool and store the output on SLRUM scratch
-- If successful, copy the connectome to user's home scratch
+- If successful, copy the connectome to uthe ser's home scratch
 
 We want to preprocess using all preset strategies.
 
@@ -83,4 +84,4 @@ Create an archive to nearline once that's done.
 
 ### Quality control
 
-TBA
+[See here](https://github.com/SIMEXP/giga_auto_qc)
